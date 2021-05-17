@@ -1,6 +1,7 @@
 /**
  * Collect and export collection of extension commands with utility methods
  */
+
 //#region Imports
 
 import { Commands } from './Commands'

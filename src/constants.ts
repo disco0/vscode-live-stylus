@@ -1,9 +1,3 @@
-//#region Imports
-
-import is from './guard';
-
-//#endregion Imports
-
 export const PROVIDER_SCHEMA = `live-stylus`;
 export const STYLUS_LANGUAGE_ID = `stylus`;
 export const STYLUS_COMMAND_BASENAME = `stylus`;

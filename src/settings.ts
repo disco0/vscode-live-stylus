@@ -1,9 +1,8 @@
 //#region Imports
 
 import { workspace } from 'vscode'
-import { window } from 'vscode'
 
-import { bind, debounce } from 'helpful-decorators'
+import { debounce } from 'helpful-decorators'
 
 type SettingsSchema = typeof import("../package.json")['contributes']['configuration'];
 

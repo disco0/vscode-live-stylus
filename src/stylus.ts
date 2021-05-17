@@ -2,6 +2,13 @@ import * as stylus from 'stylus';
 import { tagged } from './Logger' // './old/Logger-original'
 import { CONTROL_MESSAGE, OUTPUT } from './constants'
 
+export let defaultCompileOptions: compile.Options =
+{
+
+}
+
+const log = tagged('Stylus Compiler')
+
 export namespace compile
 {
     export type Options       = RenderOptions & { force?: boolean };
@@ -9,13 +16,6 @@ export namespace compile
     export type Error         = Parameters<Parameters<typeof stylus.render>[2]>[0]
     export type RenderOptions = Parameters<typeof stylus.render>[1];
 }
-
-export let defaultCompileOptions: compile.Options =
-{
-
-}
-
-const log = tagged('Stylus Compiler')
 
 /**
  * Stylus compiler wrapper that returns compiled css string on success or

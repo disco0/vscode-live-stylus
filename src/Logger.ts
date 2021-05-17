@@ -3,14 +3,18 @@
  * [gistpad extension](https://github.com/vsls-contrib/gistpad/)
  */
 
+//#region Imports
+
 import * as vscode from "vscode";
 import { window } from "vscode";
-import Settings from './settings'
 
 import { bind } from 'helpful-decorators';
 
 import { OUTPUT, META, DEBUG } from './constants'
+import Settings from './settings'
 import is from './guard'
+
+//#endregion Imports
 
 //#region Declarations
 
