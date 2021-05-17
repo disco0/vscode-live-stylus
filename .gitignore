@@ -1,6 +1,17 @@
+# Build
 out
-node_modules
-.vscode-test/
+dist
 *.vsix
-.nvmrc
+
+# Testing
+.vscode-test/
+
+# Config
 .vscode/settings.json
+
+# Package Management
+yarn-error.log
+yarn.lock
+package-lock.json
+node_modules
+.nvmrc

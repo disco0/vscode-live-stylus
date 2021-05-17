@@ -1,0 +1,45 @@
+{
+    "references":
+    [
+        { "path": "./" }
+    ],
+    "compilerOptions":
+    {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es2019",
+        "lib": ["ES2019"],
+
+        "allowSyntheticDefaultImports": true,
+        "allowUmdGlobalAccess": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+
+        "rootDir": ".",
+        "outDir": "../dist",
+
+        "sourceMap": true,
+        "strict": true,
+
+        "experimentalDecorators": true,
+
+        "checkJs": false,
+        "allowJs": false,
+
+        "pretty": true,
+        "listEmittedFiles": true,
+
+        "typeRoots":
+        [
+            "../node_modules/@types"
+        ],
+        "types": ["mocha"]
+    },
+    "exclude":
+    [
+    ],
+    "include":
+    [
+        "./test"
+    ]
+}

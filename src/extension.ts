@@ -1,28 +1,38 @@
-import * as path from "path";
-import { exec } from "child_process";
+//#region Imports
 
 import * as vscode from "vscode";
 
-export function activate(context: vscode.ExtensionContext) {
-  let disposable = vscode.commands.registerCommand(
-    "extension.helloWorld",
-    fileUri => {
-      const dir = path.dirname(fileUri.fsPath);
-      const stylusBin = path.join(
-        __dirname,
-        "../node_modules/stylus/bin/stylus"
-      );
-      const command = `node ${stylusBin} -w ${fileUri.fsPath} -o ${dir}`;
-      exec(command, (error, stdout, stderr) => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-        console.log(stdout.toString());
-      });
-    }
-  );
-  context.subscriptions.push(disposable);
+import Commands from './commands';
+import { log, tagged } from './Logger'
+import is from './guard'
+// import { tagged } from './old/Logger-original'
+// import { stylusWatcher, localStylusWatcher } from './stylusWatcher'
+// import { COMMAND_PREFIX } from './constants'
+
+//#endregion Imports
+
+export function activate(context: vscode.ExtensionContext)
+{
+    let log = tagged('activate')
+    log('Initializing extension');
+
+    log(`Loading ${Commands.length} commands.`);
+    Commands.load(context);
+
+    // const commands: [Name: string, Callback: (...any: any) => void][] =
+    // [
+    //     // [ 'watchFile', stylusWatcher ],
+    //     [ 'watchFileCommand', localStylusWatcher ]
+    // ];
+
+    // commands.forEach(([name, fn]) => {
+    //     let commandName = `${COMMAND_PREFIX}.${name}`;
+    //     log('Pushing subscription for command: ' + commandName)
+
+    //     let disposable = vscode.commands.registerCommand(commandName, fn);
+
+    //     context.subscriptions.push(disposable);
+    // })
 }
 
 export function deactivate() {}
