@@ -1,0 +1,30 @@
+
+$syntax = {
+  background:   #F3F3F3
+  comment:      #408CFF
+  declaration:  #00C
+  error:        #A00
+  literal:      #CF0E00
+  name:         #318495
+  string:       #036A07
+  text:         #222
+}
+
+/**
+ * @param {} $syntaxHash
+ */
+mapSyntaxTheme($syntaxHash = $syntax, $entryScope = ":root")
+  // {$entryScope}
+  $baseScope = match('string|literal|ident', type($entryScope)) ? selector($entryScope) : "%s" % $entryScope
+  {$baseScope}
+    for $scope, $color in $syntaxHash
+      $scopeVar = '--syntax-%s-color' % unquote($scope)
+      {$scopeVar}: $color
+
+mapSyntaxTheme($syntax)
+mapSyntaxTheme($syntax, body)
+mapSyntaxTheme($syntax, join('', ":" "root"))
+mapSyntaxTheme($syntax, 3)
+
+div
+  content: "test"
