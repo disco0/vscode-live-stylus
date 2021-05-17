@@ -1,20 +1,177 @@
 // See https://go.microsoft.com/fwlink/?LinkId=733558
 // for the documentation about the tasks.json format
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "npm",
-			"script": "watch",
-			"problemMatcher": "$tsc-watch",
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never"
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-		}
-	]
+  "version": "2.0.0",
+  "options": {
+    "env": {
+      "PACKAGE_OUT_DIR": "./build"
+    }
+  },
+  "tasks": [
+    {
+      "type": "yarn",
+      "label": "watch",
+      "task": "compile:watch",
+      "options": {
+        "statusbar": {
+          "label": "〈 Watch 〉",
+          "hide": false,
+          "filePattern": "tsconfig.*|.*\\.ts"
+        }
+      },
+      "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
+      "presentation": {
+        "reveal": "never",
+        "clear": false,
+        "echo": true,
+        "focus": false,
+        "group": "build",
+        "panel": "dedicated",
+        "revealProblems": "never",
+        "showReuseMessage": false
+      }
+    },
+    {
+      "type": "yarn",
+      "label": "compile",
+      "task": "compile",
+      "options": {
+        "statusbar": {
+          "label": "〈 Build 〉",
+          "hide": false,
+          "filePattern": "tsconfig.*|.*\\.ts"
+        }
+      },
+      "problemMatcher": [
+        "$tsc"
+      ],
+      "presentation": {
+        "reveal": "never",
+        "clear": false,
+        "echo": true,
+        "focus": false,
+        "group": "build",
+        "panel": "dedicated",
+        "revealProblems": "never",
+        "showReuseMessage": false
+      },
+      "group": "build",
+    },
+    // {
+    //     "type": "npm",
+    //     "label": "compile:release",
+    //     "options":
+    //     {
+    //       "statusbar":
+    //       {
+    //         "hide": true
+    //       }
+    //     },
+    //     "script": "compile:release",
+    //     "problemMatcher": [
+    //         "$tsc",
+    //         "$ts-webpack",
+    //     ],
+    //     "presentation": {
+    //         "reveal":           "never",
+    //         "clear":            false,
+    //         "echo":             true,
+    //         "focus":            false,
+    //         "group":            "build",
+    //         "panel":            "dedicated",
+    //         "revealProblems":   "never",
+    //         "showReuseMessage": false
+    //     },
+    //     "group": "build",
+    // },
+    {
+      "type": "shell",
+      "label": "Build .vsix",
+      "command": "vsce package --out  \"${PACKAGE_OUT_DIR}/$(jq .name ./package.json --raw-output)-$(jq .version ./package.json --raw-output).vsix\"",
+      "problemMatcher": [
+        "$ts-webpack",
+        "$ts-loader-1",
+        "$ts-loader-2"
+      ],
+      "detail": "Package extension to file {name}-{version}.vsix to directory defined with environment variable PACKAGE_OUT_DIR",
+      "group": "build",
+      "options": {
+        "statusbar": {
+          "label": "〈 Package .vsix 〉",
+          "hide": false
+        }
+      },
+      "dependsOn": [
+        "build:package:check-deps",
+        "build:package:validate-build-dir"
+      ],
+      "dependsOrder": "sequence",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false,
+        "group": "build",
+        "revealProblems": "onProblem",
+      }
+    },
+    {
+      "type": "shell",
+      "label": "build:package:check-deps",
+      "command": "command -v shx jq vsce",
+      "detail": "Check for required commands on PATH before running packaging tasks",
+      "group": "build",
+      "options": {
+        "statusbar": {
+          "hide": true
+        },
+      },
+      "isBackground": true,
+      "presentation": {
+        "echo": false,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false,
+        "group": "build",
+        "revealProblems": "onProblem",
+      }
+    },
+    {
+      "type": "shell",
+      "label": "build:package:validate-build-dir",
+      "command": "mkdir -v -p \"${PACKAGE_OUT_DIR}\"",
+      "detail": "Check if build output directory exists, and create if needed",
+      "group": "build",
+      "options": {
+        "statusbar": {
+          "hide": true
+        },
+      },
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false,
+        "group": "build",
+        "revealProblems": "onProblem",
+      }
+    }
+  ]
 }

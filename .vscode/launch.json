@@ -6,6 +6,35 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Run Extension in Test Workspace",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}",
+                "--folder-uri=${workspaceFolder}/test/workspace",
+                // Disabled due to startup time impact
+                "--disable-extension=vsls-contrib.gistfs",
+                // Other forks/non-development version installed
+                "--disable-extension=disk0.live-stylus"
+			],
+            "env":
+            {
+                "DEBUG_EXTENSION": "true"
+            },
+            "presentation":
+            {
+                "hidden": false,
+                "group": "Run",
+                "order": 1
+            },
+            "sourceMaps": true,
+			"outFiles": [
+				"${workspaceFolder}/out/**/*.js"
+			],
+			"preLaunchTask": "${defaultBuildTask}"
+		},
+		{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",
@@ -31,6 +60,6 @@
 				"${workspaceFolder}/out/test/**/*.js"
 			],
 			"preLaunchTask": "${defaultBuildTask}"
-		}
+		},
 	]
 }
