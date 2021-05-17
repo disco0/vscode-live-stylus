@@ -2,6 +2,7 @@
 out
 dist
 *.vsix
+tsconfig.tsbuildinfo
 
 # Testing
 .vscode-test/
