@@ -3,8 +3,8 @@
 	"displayName": "live-stylus",
 	"description": "live stylus",
 	"version": "0.1.0",
-	"publisher": "ajanuw",
-	"author": "Ajanuw",
+	"publisher": "disk0",
+	"author": "disk0",
 	"icon": "images/logo.png",
 	"license": "MIT",
 	"homepage": "https://github.com/januwA/vscode-live-stylus",
@@ -19,56 +19,72 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld",
+		"onCommand:live-stylus.startWatcher",
 		"onLanguage:stylus"
 	],
-	"main": "./out/extension.js",
+	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Live Stylus"
+				"command": "live-stylus.startWatcher",
+				"title": "Open Live Stylus View",
+				"when": "resourceLangId == stylus"
+			},
+			{
+				"command": "live-stylus.updateWatcher",
+				"title": "Update Live Stylus View (Temporary)",
+				"when": "false && resourceLangId == stylus"
 			}
 		],
 		"menus": {
 			"editor/context": [
 				{
-					"command": "extension.helloWorld",
-					"group": "myGrp@liveStylus",
+					"command": "live-stylus.startWatcher",
+					"group": "stylus@liveStylus",
 					"when": "resourceLangId == stylus"
 				}
 			],
 			"explorer/context": [
 				{
-					"command": "extension.helloWorld",
+					"command": "live-stylus.startWatcher",
 					"group": "navigation@-liveStylus",
 					"when": "resourceLangId == stylus"
 				}
 			]
+		},
+		"configuration": {
+			"properties": {
+				"debug": {
+					"type": "boolean",
+					"default": false,
+					"description": "Enable debug logging to extension output channel."
+				}
+			}
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"test": "node ./out/test/runTest.js"
+		"vscode:prepublish": "yarn run compile",
+		"compile": "yarn run compile",
+		"compile:base": "tsc --build ./src --watch",
+		"compile:watch": "yarn run compile:base --watch",
+		"pretest": "yarn run compile && npm run lint",
+		"test": "node ./dist/test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/glob": "^7.1.1",
-		"@types/mocha": "^7.0.1",
-		"@types/node": "^12.11.7",
-		"@types/vscode": "^1.39.0",
-		"eslint": "^6.8.0",
-		"@typescript-eslint/parser": "^2.18.0",
-		"@typescript-eslint/eslint-plugin": "^2.18.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.0.3",
+		"@types/node": "^14.11.1",
+		"@types/stylus": "^0.48.33",
+		"@types/vscode": "^1.49.0",
 		"glob": "^7.1.6",
-		"mocha": "^7.0.1",
-		"typescript": "^3.7.5",
-		"vscode-test": "^1.3.0"
+		"mocha": "^8.1.3",
+		"tsdef": "^0.0.14",
+		"typescript": "next",
+		"vscode-test": "^1.4.0"
 	},
 	"dependencies": {
-		"stylus": "^0.54.7"
+		"helpful-decorators": "^2.1.0",
+		"stylus": "github:disco0/stylus#dev",
+		"stylus-stylus": "github:disco0/stylus-stylus"
 	}
 }
